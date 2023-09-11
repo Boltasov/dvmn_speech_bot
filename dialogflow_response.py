@@ -32,7 +32,7 @@ def dialogflow_response(project_id, session_id, text, language_code):
     )
     print("Fulfillment text: {}\n".format(response.query_result.fulfillment_text))
 
-    return response.query_result.fulfillment_text
+    return response.query_result.fulfillment_text, response.query_result.intent.is_fallback
 
 
 if __name__ == "__main__":

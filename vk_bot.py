@@ -46,5 +46,6 @@ if __name__ == "__main__":
         if event.type == VkEventType.MESSAGE_NEW and event.to_me:
             session_id = event.user_id
             input_text = event.text
-            response_text = dialogflow_response(project_id, session_id, input_text, language_code)
-            vk_api.messages.send(user_id=session_id, message=response_text, random_id=0)
+            response_text, is_fallback = dialogflow_response(project_id, session_id, input_text, language_code)
+            if not is_fallback:
+                vk_api.messages.send(user_id=session_id, message=response_text, random_id=0)

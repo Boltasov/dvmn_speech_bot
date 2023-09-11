@@ -28,7 +28,7 @@ def start(update: Update, context: CallbackContext):
 def echo(update: Update, context: CallbackContext):
     input_text = update.message.text
     session_id = update.effective_chat.id
-    response_text = dialogflow_response(project_id, session_id, input_text, language_code)
+    response_text, _ = dialogflow_response(project_id, session_id, input_text, language_code)
     context.bot.send_message(chat_id=session_id, text=response_text)
 
 
