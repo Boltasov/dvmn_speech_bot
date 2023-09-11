@@ -5,6 +5,14 @@ import random
 import vk_api as vk
 from vk_api.longpoll import VkLongPoll, VkEventType
 
+from dialogflow_response import dialogflow_response
+
+
+dotenv.load_dotenv()
+tg_key = os.getenv('TG_BOT_KEY')
+project_id = os.getenv('PROJECT_ID')
+language_code = 'ru-RU'
+
 
 def info(vk_key):
     vk_session = vk.VkApi(token=vk_key)
@@ -36,4 +44,7 @@ if __name__ == "__main__":
     longpoll = VkLongPoll(vk_session)
     for event in longpoll.listen():
         if event.type == VkEventType.MESSAGE_NEW and event.to_me:
-            echo(event, vk_api)
+            session_id = event.user_id
+            input_text = event.text
+            response_text = dialogflow_response(project_id, session_id, input_text, language_code)
+            vk_api.messages.send(user_id=session_id, message=response_text, random_id=0)
