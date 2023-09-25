@@ -1,12 +1,13 @@
 import json
 import dotenv
 import os
+import argparse
 
 from google.cloud import dialogflow
 
 
-def get_train_phrases():
-    with open("questions.json", "r", encoding="UTF-8") as train_file:
+def get_train_phrases(filepath):
+    with open(filepath, "r", encoding="UTF-8") as train_file:
         phrases_json = train_file.read()
 
     phrases = json.loads(phrases_json)
@@ -42,7 +43,15 @@ def create_intent(project_id, display_name, training_phrases_parts, message_text
 
 
 if __name__ == "__main__":
-    phrases = get_train_phrases()
+    parser = argparse.ArgumentParser(
+        prog='TrainDialogFlow',
+        description='Учит DialogFlow фразам из заданного файла',
+    )
+    parser.add_argument("--filepath", help='Путь к файлу, откуда взять учебные фразы', type=str, required=True)
+    args = parser.parse_args()
+
+    filepath = args.filepath
+    phrases = get_train_phrases(filepath)
 
     dotenv.load_dotenv()
     project_id = os.getenv('PROJECT_ID')
