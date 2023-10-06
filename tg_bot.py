@@ -53,6 +53,6 @@ if __name__ == "__main__":
 
     try:
         main(tg_key, project_id, language_code)
-        logger.info('Speech bot запустился. Всё идёт по плану.')
+        logger.info('Speech tg-bot запустился. Всё идёт по плану.')
     except Exception as e:
-        logger.exception(f'Speech bot сломался. Лог ошибки:\n {e}')
+        logger.exception(f'Speech tg-bot сломался. Лог ошибки:\n {e}')
