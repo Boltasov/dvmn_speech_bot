@@ -7,6 +7,8 @@
 - tg_bot.py: запуск telegram-бота
 - vk_bot.py: запуск vk-бота
 
+![image](https://github.com/Boltasov/dvmn_speech_bot/blob/master/demo.gif)
+
 ## Как установить
 
 Должны быть предустановлены Python 3 и pip.
