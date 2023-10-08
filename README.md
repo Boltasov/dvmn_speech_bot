@@ -39,12 +39,14 @@ python pip install -r requirements.txt
 
 Заполнить `.env`:
 ```
-TG_BOT_KEY=<ВАШ_КЛЮЧ_TELEGRAM>
+TG_BOT_KEY=<ВАШ_КЛЮЧ_TELEGRAM_БОТА>
 PROJECT_ID=<ВАШ_ID_ПРОЕКТА_DIALOGFLOW>
 DIALOGFLOW_KEY=<ВАШ_API_КЛЮЧ_DIALOGFLOW>
 GOOGLE_APPLICATION_CREDENTIALS=<ПУТЬ К ФАЙЛУ credentials.json>
 GOOGLE_API_KEY=<ВАШ_GOOGLE_API_KEY>
 VK_KEY=<ВАШ_КЛЮЧ_VK>
+LOG_BOT_KEY=<ВАШ_КЛЮЧ_TELEGRAM_БОТА_ДЛЯ_ЛОГГИРОВАНИЯ>
+CHAT_ID=<ВАШ_CHAT_ID_В_ТЕЛЕГРАМ_ДЛЯ_ЛОГОВ>
 ```
 
 ## Запуск
