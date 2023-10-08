@@ -55,8 +55,8 @@ if __name__ == "__main__":
 
     dotenv.load_dotenv()
     project_id = os.getenv('PROJECT_ID')
-    for phrase in phrases:
+    for phrase, training_values in phrases.items():
         display_name = phrase
-        training_phrases_parts = phrases[phrase]["questions"]
-        message_texts = [phrases[phrase]["answer"]]
+        training_phrases_parts = training_values.get("questions")
+        message_texts = training_values.get("answer")
         create_intent(project_id, display_name, training_phrases_parts, message_texts)
