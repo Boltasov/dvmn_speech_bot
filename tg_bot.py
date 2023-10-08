@@ -18,7 +18,7 @@ def start(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id, text="I'm a bot, please talk to me!")
 
 
-def smart_response(update: Update, context: CallbackContext, project_id, language_code):
+def get_smart_response(update: Update, context: CallbackContext, project_id, language_code):
     input_text = update.message.text
     session_id = update.effective_chat.id
     response_text, _ = dialogflow_response(project_id, session_id, input_text, language_code)

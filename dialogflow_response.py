@@ -4,7 +4,7 @@ import os
 from google.cloud import dialogflow
 
 
-def dialogflow_response(project_id, session_id, text, language_code):
+def get_dialogflow_response(project_id, session_id, text, language_code):
     """Returns the result of detect intent with texts as inputs.
 
     Using the same `session_id` between requests allows continuation
