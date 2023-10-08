@@ -26,18 +26,23 @@ def get_smart_response(update: Update, context: CallbackContext, project_id, lan
 
 
 def main(tg_key, project_id, language_code):
-    updater = Updater(token=tg_key, use_context=True)
-    dispatcher = updater.dispatcher
+    try:
+        updater = Updater(token=tg_key, use_context=True)
+        dispatcher = updater.dispatcher
 
-    start_handler = CommandHandler('start', start)
-    smart_response_enriched = partial(get_smart_response, project_id=project_id, language_code=language_code)
-    smart_handler = MessageHandler(
-        Filters.text & (~Filters.command),
-        smart_response_enriched)
-    dispatcher.add_handler(start_handler)
-    dispatcher.add_handler(smart_handler)
+        start_handler = CommandHandler('start', start)
+        smart_response_enriched = partial(get_smart_response, project_id=project_id, language_code=language_code)
+        smart_handler = MessageHandler(
+            Filters.text & (~Filters.command),
+            smart_response_enriched)
+        dispatcher.add_handler(start_handler)
+        dispatcher.add_handler(smart_handler)
 
-    updater.start_polling()
+        updater.start_polling()
+
+        logger.info('Speech tg-bot запустился. Всё идёт по плану.')
+    except Exception as e:
+        logger.exception(f'Speech tg-bot сломался. Лог ошибки:\n {e}')
 
 
 if __name__ == "__main__":
@@ -51,8 +56,4 @@ if __name__ == "__main__":
     logger.setLevel(logging.INFO)
     logger.addHandler(LogsHandler(chat_id=chat_id, tg_bot_key=log_bot_key))
 
-    try:
-        main(tg_key, project_id, language_code)
-        logger.info('Speech tg-bot запустился. Всё идёт по плану.')
-    except Exception as e:
-        logger.exception(f'Speech tg-bot сломался. Лог ошибки:\n {e}')
+    main(tg_key, project_id, language_code)
