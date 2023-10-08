@@ -7,7 +7,7 @@ import vk_api as vk
 from vk_api.longpoll import VkLongPoll, VkEventType
 from tg_logger import LogsHandler
 
-from dialogflow_response import dialogflow_response
+from dialogflow_response import get_dialogflow_response
 
 
 logger = logging.getLogger("TG logger")
@@ -21,7 +21,7 @@ def main(vk_key, project_id, language_code):
         if event.type == VkEventType.MESSAGE_NEW and event.to_me:
             session_id = event.user_id
             input_text = event.text
-            response_text, is_fallback = dialogflow_response(project_id, session_id, input_text, language_code)
+            response_text, is_fallback = get_dialogflow_response(project_id, session_id, input_text, language_code)
             if not is_fallback:
                 vk_api.messages.send(user_id=session_id, message=response_text, random_id=random.randint(0, 1023))
 

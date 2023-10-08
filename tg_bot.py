@@ -7,7 +7,7 @@ from tg_logger import LogsHandler
 from telegram import Update
 from telegram.ext import Updater, CallbackContext, CommandHandler, MessageHandler, Filters
 
-from dialogflow_response import dialogflow_response
+from dialogflow_response import get_dialogflow_response
 
 
 logger = logging.getLogger("TG logger")
@@ -21,7 +21,7 @@ def start(update: Update, context: CallbackContext):
 def get_smart_response(update: Update, context: CallbackContext, project_id, language_code):
     input_text = update.message.text
     session_id = update.effective_chat.id
-    response_text, _ = dialogflow_response(project_id, session_id, input_text, language_code)
+    response_text, _ = get_dialogflow_response(project_id, session_id, input_text, language_code)
     context.bot.send_message(chat_id=session_id, text=response_text)
 
 
@@ -30,7 +30,7 @@ def main(tg_key, project_id, language_code):
     dispatcher = updater.dispatcher
 
     start_handler = CommandHandler('start', start)
-    smart_response_enriched = partial(smart_response, project_id=project_id, language_code=language_code)
+    smart_response_enriched = partial(get_smart_response, project_id=project_id, language_code=language_code)
     smart_handler = MessageHandler(
         Filters.text & (~Filters.command),
         smart_response_enriched)
