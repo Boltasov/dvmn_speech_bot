@@ -13,8 +13,18 @@ from dialogflow_response import get_dialogflow_response
 logger = logging.getLogger("TG logger")
 
 
-def main(vk_key, project_id, language_code):
+def main():
     try:
+        dotenv.load_dotenv()
+        vk_key = os.getenv('VK_KEY')
+        project_id = os.getenv('PROJECT_ID')
+        language_code = 'ru-RU'
+        log_bot_key = os.getenv('LOG_BOT_KEY')
+        chat_id = os.getenv('CHAT_ID')
+
+        logger.setLevel(logging.INFO)
+        logger.addHandler(LogsHandler(chat_id=chat_id, tg_bot_key=log_bot_key))
+
         vk_session = vk.VkApi(token=vk_key)
         vk_api = vk_session.get_api()
         longpoll = VkLongPoll(vk_session)
@@ -29,17 +39,3 @@ def main(vk_key, project_id, language_code):
         logger.info('Speech vk-bot запустился. Всё идёт по плану.')
     except Exception as e:
         logger.exception(f'Speech vk-bot сломался. Лог ошибки:\n {e}')
-
-
-if __name__ == "__main__":
-    dotenv.load_dotenv()
-    vk_key = os.getenv('VK_KEY')
-    project_id = os.getenv('PROJECT_ID')
-    language_code = 'ru-RU'
-    log_bot_key = os.getenv('LOG_BOT_KEY')
-    chat_id = os.getenv('CHAT_ID')
-
-    logger.setLevel(logging.INFO)
-    logger.addHandler(LogsHandler(chat_id=chat_id, tg_bot_key=log_bot_key))
-
-    main(vk_key, project_id, language_code)

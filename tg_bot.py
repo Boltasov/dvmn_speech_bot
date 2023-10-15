@@ -25,8 +25,18 @@ def get_smart_response(update: Update, context: CallbackContext, project_id, lan
     context.bot.send_message(chat_id=session_id, text=response_text)
 
 
-def main(tg_key, project_id, language_code):
+def main():
     try:
+        dotenv.load_dotenv()
+        tg_key = os.getenv('TG_BOT_KEY')
+        project_id = os.getenv('PROJECT_ID')
+        log_bot_key = os.getenv('LOG_BOT_KEY')
+        chat_id = os.getenv('CHAT_ID')
+        language_code = 'ru-RU'
+
+        logger.setLevel(logging.INFO)
+        logger.addHandler(LogsHandler(chat_id=chat_id, tg_bot_key=log_bot_key))
+
         updater = Updater(token=tg_key, use_context=True)
         dispatcher = updater.dispatcher
 
@@ -43,17 +53,3 @@ def main(tg_key, project_id, language_code):
         logger.info('Speech tg-bot запустился. Всё идёт по плану.')
     except Exception as e:
         logger.exception(f'Speech tg-bot сломался. Лог ошибки:\n {e}')
-
-
-if __name__ == "__main__":
-    dotenv.load_dotenv()
-    tg_key = os.getenv('TG_BOT_KEY')
-    project_id = os.getenv('PROJECT_ID')
-    log_bot_key = os.getenv('LOG_BOT_KEY')
-    chat_id = os.getenv('CHAT_ID')
-    language_code = 'ru-RU'
-
-    logger.setLevel(logging.INFO)
-    logger.addHandler(LogsHandler(chat_id=chat_id, tg_bot_key=log_bot_key))
-
-    main(tg_key, project_id, language_code)
